@@ -1,18 +1,33 @@
-function insert(num) {
-    document.getElementById('result').value += num;
+
+const resultInput = document.getElementById('result');
+
+function appendNumber(number) {
+    resultInput.value += number;
 }
 
-function clearScreen() {
-    document.getElementById('result').value = '';
+function appendOperator(operator) {
+    if (resultInput.value !== '' && !isOperator(resultInput.value.slice(-1))) {
+        resultInput.value += operator;
+    }
 }
 
-function deleteLast() {
-    let result = document.getElementById('result').value;
-    document.getElementById('result').value = result.slice(0, -1);
+function isOperator(char) {
+    return ['+', '-', '*', '/', '%'].includes(char);
 }
 
-function calculate() {
-    let result = document.getElementById('result').value;
-    let answer = eval(result);
-    document.getElementById('result').value = answer;
+function calculateResult() {
+    try {
+        const result = eval(resultInput.value);
+        resultInput.value = result;
+    } catch (error) {
+        resultInput.value = 'Error';
+    }
+}
+
+function clearResult() {
+    resultInput.value = '';
+}
+
+function deleteLastChar() {
+    resultInput.value = resultInput.value.slice(0, -1);
 }
